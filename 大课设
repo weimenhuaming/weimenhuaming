@@ -1,0 +1,83 @@
+#pragma once
+#include "iostream"
+using namespace std;
+
+template <class T>
+class spstack
+{
+public:
+	T data;
+};
+
+template <class T>
+class Stack
+{
+public:
+	Stack(int arcnum);
+	~Stack();
+	void push(T data);
+	void pop(T &e);
+	bool isempty();
+	void pop2();
+	void clear();
+public:
+	spstack<T>* base;//栈底指针
+	spstack<T>* top;//栈顶指针
+	int length;//长度
+	int max;//最大长度
+};
+
+template <class T>
+inline Stack<T>::Stack(int arcnum)
+{
+	base = new spstack<T>[arcnum];
+	top = base;
+	if (!base)
+	{
+		exit(0);
+	}
+	length = 0;
+	max = arcnum;
+}
+template<class T>
+inline Stack<T>::~Stack()
+{
+	delete base;
+	length = 0;
+	base = top = nullptr;
+}
+template<class T>
+inline void Stack<T>::push(T data)
+{
+	this->length++;
+	
+	top->data = data;
+	top++;
+}
+template<class T>
+inline void Stack<T>::pop(T& e)
+{
+	e = top[-1].data;
+	top--;
+	length--;
+}
+template<class T>
+inline bool Stack<T>::isempty()
+{
+	if (base == top)
+	{
+		return true;
+	}
+	return false;
+}
+template<class T>
+inline void Stack<T>::pop2()
+{
+	top--;
+	length--;
+}
+template<class T>
+inline void Stack<T>::clear()
+{
+	top = base;
+}
